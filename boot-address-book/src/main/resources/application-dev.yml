@@ -1,0 +1,29 @@
+server:
+  port: 8866
+
+#数据库连接配置
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/project_seed?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: honger1234
+
+#mybatis-plus配置
+mybatis-plus:
+  type-aliases-package: com.honger1234.springbootprojectseed.entity
+  mapper-locations: classpath:mybatis/mappers/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto #配置主键类型， #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      logic-delete-field: deleted #全局d的逻辑删除字段
+      logic-delete-value: 1 #逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    map-underscore-to-camel-case: true #是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    call-setters-on-nulls: true # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+
+#打印执行的sql语句
+logging:
+  level:
+    com.honger1234.springbootprojectseed.dao: debug
