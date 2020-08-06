@@ -9,6 +9,8 @@ spring:
     username: root
     password: honger1234
 
+    
+
 #mybatis-plus配置
 mybatis-plus:
   type-aliases-package: com.honger1234.springbootprojectseed.entity
