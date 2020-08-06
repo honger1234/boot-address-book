@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <!--jar包名-->
+        <project.build.name>boot-address-book</project.build.name>
     </properties>
 
     <dependencies>
@@ -95,6 +97,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.build.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
