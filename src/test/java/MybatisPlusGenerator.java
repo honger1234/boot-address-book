@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MybatisPlusGenerator {
 
     //JDBC配置，请修改为你项目的实际配置
-    private static final String JDBC_URL = "jdbc:p6spy:mysql://localhost:3306/project_seed?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
+    private static final String JDBC_URL = "jdbc:p6spy:mysql://localhost:3306/address_book?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "honger1234";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
@@ -27,14 +27,14 @@ public class MybatisPlusGenerator {
     private static final String AUTHOR = "zt";//@author
 
     //生成的文件路径配置
-//    private static final String OUTPUTDIR = System.getProperty("user.dir")+ "/src/main/java";//文件生成的基本路径
-    private static final String OUTPUTDIR = "D:\\zt\\idea-workspace\\spring-boot-project-seed\\src\\main\\java";//文件生成的基本路径
+    private static final String OUTPUTDIR = System.getProperty("user.dir")+ "/src/main/java";//文件生成的基本路径
+//    private static final String OUTPUTDIR = "D:\\zt\\idea-workspace\\spring-boot-project-seed\\src\\main\\java";//文件生成的基本路径
     private static final String PACKAGE_PARENT ="com.honger1234.springbootprojectseed";//生成的父包名
     private static final String PACKAGE_ENTITY ="entity";//生成的实体类的包路径，最终为PACKAGE_PARENT+PACKAGE_ENTITY
     private static final String PACKAGE_CONTROLLER ="controller";//生成的controller包路径，最终为PACKAGE_PARENT+PACKAGE_CONTROLLER
     private static final String PACKAGE_SERVICE ="service";//生成的service接口包路径，实现类自动在创建在与接口同一包下的impl包下
     private static final String PACKAGE_DAO ="dao";//生成的持久层接口包路径
-    private static final String PACKAGE_XML ="dao";//生成的XML文件的包路径
+    private static final String PACKAGE_XML ="dao.xml";//生成的XML文件的包路径
 
     private static final String TABLE_PREFIX ="tb_";//表前缀
     private static final boolean ENTITY_SWAGGER =true;//实体类是否添加swagger2注解
@@ -48,7 +48,7 @@ public class MybatisPlusGenerator {
                     .setAuthor(AUTHOR)//作者
                     .setOpen(false)
                     .setOutputDir(OUTPUTDIR)//生成目录
-                    .setFileOverride(false)//文件覆盖
+                    .setFileOverride(true)//文件覆盖
                     .setIdType(IdType.AUTO)//主键策略
                     //自定义文件命名，注意 %s 会自动填充表实体属性！
 //                   // 设置生成的service接口的名字的首字母是否为I，默认Service是以I开头的
@@ -102,7 +102,7 @@ public class MybatisPlusGenerator {
     }
 
     public static void main(String[] args) {
-        String tableName="tb_employee";
+        String tableName="tb_sys_user";
         codeGenerator(tableName);
 //        System.out.println(System.getProperty("user.dir"));
     }

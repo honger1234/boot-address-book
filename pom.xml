@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.honger1234</groupId>
-    <artifactId>spring-boot-project-seed</artifactId>
+    <artifactId>boot-address-book</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-project-seed</name>
+    <name>boot-address-book</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -24,6 +24,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--添加fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.53</version>
         </dependency>
         <!--lombook-->
         <dependency>
