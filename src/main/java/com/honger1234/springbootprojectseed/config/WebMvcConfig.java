@@ -21,9 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //token拦截器
         registry.addInterceptor(tokenIntercepter())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/login")//放行登录接口
-                .excludePathPatterns("/sysUser/login")
-                .excludePathPatterns("/swagger-resources/**", "/webjars/**","/doc.html/**","/api-docs-ext/**") //放行swagger接口文档地址
+                .excludePathPatterns("/sysUser/login")//放行登录接口
+                .excludePathPatterns("/swagger-resources/**", "/webjars/**","/doc.html/**","/api-docs-ext/**","/favicon.ico") //放行swagger接口文档地址
 //                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**","/doc.html/**","/api-docs-ext/**") ;//放行swagger接口文档地址
                 .excludePathPatterns("/test/**","/employee/list") //放行测试接口
                 .excludePathPatterns("/error");//放行404异常

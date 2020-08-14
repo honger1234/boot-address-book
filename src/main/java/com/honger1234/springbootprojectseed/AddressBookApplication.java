@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.honger1234.springbootprojectseed.dao")
-public class SpringBootProjectSeedApplication {
+public class AddressBookApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootProjectSeedApplication.class, args);
+        SpringApplication.run(AddressBookApplication.class, args);
     }
 
 }

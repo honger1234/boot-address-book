@@ -42,21 +42,24 @@ public class SysUser implements Serializable {
     private String password;
 
     @ApiModelProperty(value = "创建时间")
-      @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String createOperator;
 
     @ApiModelProperty(value = "更新时间")
-      @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "更新人")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateOperator;
 
     @ApiModelProperty(value = "逻辑删除 0未删，1删除")
     @TableLogic
+    @TableField(fill = FieldFill.INSERT)
     private Integer deleted;
 
 

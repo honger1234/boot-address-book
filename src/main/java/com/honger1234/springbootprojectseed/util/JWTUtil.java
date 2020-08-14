@@ -18,7 +18,7 @@ public class JWTUtil {
 
     private static String SECRET="WgtqaT1HNTZPZNMDJu3k" ;
 
-    private static long EXPIRE=60;//失效时间,60分钟
+    private static long EXPIRE=15;//失效时间,60分钟
 
     /**
      * 生成token
@@ -97,6 +97,14 @@ public class JWTUtil {
         } catch (ExpiredJwtException expiredJwtException) {
             return true;
         }
+    }
+
+    public static void main(String[] args){
+//        String s = generate("22", "哈哈");
+//        System.out.println(s);
+        String token="eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyMiIsInN1YiI6IuWTiOWTiCIsImlhdCI6MTU5NzM3Njg2NCwiZXhwIjoxNTk3Mzc3NzY0fQ.t9UMVGbNA1EHEzV11q9aJoS1NQKWhJrQeMOUPdQjt1s781dt_5dNa6qLxBBR0RTCflm3sgrxtxvr5Vpv-NbeNA";
+        boolean expired = isExpired(token);
+        System.out.println(expired);
     }
 
 }

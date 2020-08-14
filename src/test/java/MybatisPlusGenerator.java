@@ -41,6 +41,8 @@ public class MybatisPlusGenerator {
     private static final boolean ENTITY_Lombok =true;//实体是否为lombok模型 LogicDeleteFieldName
     private static final String LOGIC_DELETE_FIELD_NAME ="deleted";//逻辑删除字段名
 
+    private static final boolean FILE_OVERRIDE =false;//是否覆盖文件
+
     public static void codeGenerator(String tableName){
         //全局配置
         GlobalConfig globalConfig = new GlobalConfig();
@@ -48,7 +50,7 @@ public class MybatisPlusGenerator {
                     .setAuthor(AUTHOR)//作者
                     .setOpen(false)
                     .setOutputDir(OUTPUTDIR)//生成目录
-                    .setFileOverride(true)//文件覆盖
+                    .setFileOverride(FILE_OVERRIDE)//文件覆盖
                     .setIdType(IdType.AUTO)//主键策略
                     //自定义文件命名，注意 %s 会自动填充表实体属性！
 //                   // 设置生成的service接口的名字的首字母是否为I，默认Service是以I开头的
