@@ -12,11 +12,9 @@ import com.honger1234.springbootprojectseed.util.ResultGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,7 @@ public class ContactController {
      * @return
      */
     @GetMapping("/loadAll")
-    @ApiOperation(value = "用户的所有联系人", notes = "获取用户的所有联系人")
+    @ApiOperation(value = "用户的所有联系人")
     public Result<JSONObject> loadAll(@CurrentUser SysUser user){
 //        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSON(user).toString());
         List<Contact> contacts=contactService.loadAll(user);
@@ -67,6 +65,64 @@ public class ContactController {
             }
         }
         return ResultGenerator.genSuccessResult(jsonObject);
+    }
+
+    /**
+     * 添加联系人
+     * @param contact
+     * @return
+     */
+    @PostMapping(value = "/add")
+    @ApiOperation(value = "添加联系人")
+    public Result addContact(@RequestBody Contact contact){
+        boolean save = contactService.save(contact);
+        if (save){
+            return ResultGenerator.genSuccessResult(contact);
+        }
+        return ResultGenerator.genFailResult("添加失败");
+    }
+
+    @GetMapping(value = "/detail")
+    @ApiOperation(value = "联系人详情")
+    public Result contactDetail(@RequestParam Integer id){
+        if (id==null){
+            return ResultGenerator.genFailResult("联系人ID不能为空");
+        }
+        Contact contact = contactService.getById(id);
+        if (contact==null){
+            return ResultGenerator.genFailResult("联系人不存在");
+        }
+        return ResultGenerator.genSuccessResult(contact);
+    }
+
+    /**
+     * 更新联系人信息
+     * @param contact
+     * @return
+     */
+    @PostMapping(value = "/update")
+    @ApiOperation(value = "修改联系人")
+    public Result updateContact(@RequestBody Contact contact){
+        boolean b = contactService.updateById(contact);
+        if (b){
+            return ResultGenerator.genSuccessResult(contact);
+        }
+        return ResultGenerator.genFailResult("更新失败");
+    }
+
+    /**
+     * 删除联系人
+     * @param contact
+     * @return
+     */
+    @PostMapping(value = "/delete")
+    @ApiOperation(value = "删除联系人")
+    public Result delete(@RequestBody Contact contact){
+        boolean b = contactService.removeById(contact);
+        if (b){
+            return ResultGenerator.genSuccessResult(contact);
+        }
+        return ResultGenerator.genFailResult("删除失败");
     }
 
 }

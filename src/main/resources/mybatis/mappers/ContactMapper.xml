@@ -34,14 +34,12 @@
             t3.create_time,
             t3.create_operator,
             t3.update_operator,
-            t3.update_time,
-            t1.deleted
+            t3.update_time
         from
-            tb_user_contact t1
-        left join tb_sys_user t2 on t1.user_id=t2.id
-        left join tb_contact t3 on t1.contact_id=t3.id
+             tb_sys_user t2
+        left join tb_contact t3 on t2.id=t3.user_id
         <where>
-            t2.id=#{id}
+            t3.user_id=#{id}
         </where>
         order by t3.initial
     </select>
