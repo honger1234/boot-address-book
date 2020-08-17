@@ -2,6 +2,7 @@ package com.honger1234.springbootprojectseed.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.honger1234.springbootprojectseed.entity.SysUser;
 import com.honger1234.springbootprojectseed.service.ISysUserService;
 import com.honger1234.springbootprojectseed.util.JWTUtil;
@@ -47,8 +48,10 @@ public class SysUserController {
         }
         //生成token
         String token= JWTUtil.generate(sysUser.getId().toString(),sysUser.getUsername());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token",token);
 //        Claims claim = JWTUtil.getClaim(token);
-        return ResultGenerator.genSuccessResult(token);
+        return ResultGenerator.genSuccessResult(jsonObject);
     }
 
     @PostMapping(value = "/register")

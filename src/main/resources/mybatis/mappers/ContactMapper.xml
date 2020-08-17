@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honger1234.springbootprojectseed.dao.IContactDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.honger1234.springbootprojectseed.entity.Contact">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="tele_number" property="teleNumber" />
+        <result column="work_address" property="workAddress" />
+        <result column="home_address" property="homeAddress" />
+        <result column="image" property="image" />
+        <result column="remark" property="remark" />
+        <result column="initial" property="initial" />
+        <result column="create_time" property="createTime" />
+        <result column="create_operator" property="createOperator" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_operator" property="updateOperator" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+</mapper>

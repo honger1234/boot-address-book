@@ -1,8 +1,11 @@
 package com.honger1234.springbootprojectseed.intercepter;
 
+import com.honger1234.springbootprojectseed.entity.SysUser;
 import com.honger1234.springbootprojectseed.exception.TokenException;
+import com.honger1234.springbootprojectseed.service.ISysUserService;
 import com.honger1234.springbootprojectseed.util.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import sun.rmi.runtime.Log;
@@ -15,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 public class TokenIntercepter implements HandlerInterceptor {
+
+    @Autowired
+    private ISysUserService sysUserService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info(request.getRequestURI());
@@ -27,6 +33,9 @@ public class TokenIntercepter implements HandlerInterceptor {
         if (expired){
             throw new TokenException("token已过期");
         }
+        String username = JWTUtil.getClaim(token).getSubject();
+        SysUser sysUser = sysUserService.listByUsername(username);
+        request.setAttribute("currentUser", sysUser);
         return true;
     }
 }

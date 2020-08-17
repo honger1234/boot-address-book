@@ -2,6 +2,7 @@ package com.honger1234.springbootprojectseed.service.impl;
 
 import com.honger1234.springbootprojectseed.entity.SysUser;
 import com.honger1234.springbootprojectseed.dao.ISysUserDao;
+import com.honger1234.springbootprojectseed.exception.BusinessException;
 import com.honger1234.springbootprojectseed.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserDao, SysUser> implem
      */
     @Override
     public SysUser listByUsername(String username) {
-        return sysUserDao.listByUsername(username);
+        SysUser sysUser = sysUserDao.listByUsername(username);
+        if (sysUser==null){
+            throw new BusinessException("用户不存在");
+        }
+        return sysUser;
     }
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 /**
  * @Description: MybatisPlus代码生成器
  * @author: zt
- * @date: 2020年3月26日
  */
 public class MybatisPlusGenerator {
 
@@ -77,10 +76,16 @@ public class MybatisPlusGenerator {
                       .setLogicDeleteFieldName(LOGIC_DELETE_FIELD_NAME);//逻辑删除字段
         //自动填充配置
         TableFill createTime=new TableFill("create_time", FieldFill.INSERT);
+        TableFill createOperator=new TableFill("create_operator", FieldFill.INSERT);
         TableFill updateTime=new TableFill("update_time", FieldFill.INSERT_UPDATE);
+        TableFill updateOperator=new TableFill("update_operator", FieldFill.INSERT_UPDATE);
+        TableFill deleted=new TableFill("deleted", FieldFill.INSERT);
         ArrayList<TableFill> tableFills = new ArrayList<>();
         tableFills.add(createTime);
+        tableFills.add(createOperator);
         tableFills.add(updateTime);
+        tableFills.add(updateOperator);
+        tableFills.add(deleted);
         strategyConfig.setTableFillList(tableFills);
         //包名策略配置
         PackageConfig packageConfig=new PackageConfig();
@@ -104,7 +109,7 @@ public class MybatisPlusGenerator {
     }
 
     public static void main(String[] args) {
-        String tableName="tb_sys_user";
+        String tableName="tb_contact";
         codeGenerator(tableName);
 //        System.out.println(System.getProperty("user.dir"));
     }
