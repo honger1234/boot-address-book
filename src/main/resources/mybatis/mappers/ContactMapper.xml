@@ -19,5 +19,31 @@
         <result column="update_operator" property="updateOperator" />
         <result column="deleted" property="deleted" />
     </resultMap>
+    <!--获取当前用户的所有联系人-->
+    <select id="loadAll" resultType="com.honger1234.springbootprojectseed.entity.Contact">
+        select
+            t3.name,
+            t3.id,
+            t3.phone_number,
+            t3.tele_number,
+            t3.work_address,
+            t3.home_address,
+            t3.image,
+            t3.remark,
+            t3.initial,
+            t3.create_time,
+            t3.create_operator,
+            t3.update_operator,
+            t3.update_time,
+            t1.deleted
+        from
+            tb_user_contact t1
+        left join tb_sys_user t2 on t1.user_id=t2.id
+        left join tb_contact t3 on t1.contact_id=t3.id
+        <where>
+            t2.id=#{id}
+        </where>
+        order by t3.initial
+    </select>
 
 </mapper>

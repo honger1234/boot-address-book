@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,11 +44,29 @@ public class ContactController {
     @GetMapping("/loadAll")
     @ApiOperation(value = "用户的所有联系人", notes = "获取用户的所有联系人")
     public Result<JSONObject> loadAll(@CurrentUser SysUser user){
+//        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSON(user).toString());
+        List<Contact> contacts=contactService.loadAll(user);
+        //调整返回格式
         JSONObject jsonObject = new JSONObject();
-        JSONObject jsonObject1 = JSONObject.parseObject(JSONObject.toJSON(user).toString());
-//        List<Contact> contacts=contactService.loadAll(user);
-        jsonObject.put("addressBook","这是通讯录的全部联系人");
-        return ResultGenerator.genSuccessResult(jsonObject1);
+        for (int i=0;i<contacts.size();i++){
+            String initial=contacts.get(i).getInitial();
+            //如果对象的字母和上一个的首字母相同，继续遍历
+            if (i>0){
+                String lastinitial=contacts.get(i-1).getInitial();
+                if (lastinitial.equals(initial)){
+                    continue;
+                }
+            }
+            List<Contact> list=new ArrayList<>();//首字母对应的联系人
+            jsonObject.put(initial,list);
+            for (Contact contact:contacts){
+                String newInitial=contact.getInitial();
+                if (initial.equals(newInitial)){
+                    list.add(contact);
+                }
+            }
+        }
+        return ResultGenerator.genSuccessResult(jsonObject);
     }
 
 }

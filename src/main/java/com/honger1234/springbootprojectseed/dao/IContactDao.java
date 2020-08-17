@@ -2,6 +2,9 @@ package com.honger1234.springbootprojectseed.dao;
 
 import com.honger1234.springbootprojectseed.entity.Contact;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.honger1234.springbootprojectseed.entity.SysUser;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-08-17
  */
 public interface IContactDao extends BaseMapper<Contact> {
-
+    /**
+     * 获取当前用户的所有联系人
+     * @param user
+     * @return
+     */
+    List<Contact> loadAll(SysUser user);
 }
