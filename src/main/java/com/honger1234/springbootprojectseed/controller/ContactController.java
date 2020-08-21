@@ -3,6 +3,9 @@ package com.honger1234.springbootprojectseed.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.PutObjectRequest;
 import com.honger1234.springbootprojectseed.annotation.CurrentUser;
 import com.honger1234.springbootprojectseed.entity.Contact;
 import com.honger1234.springbootprojectseed.entity.Result;
@@ -13,12 +16,16 @@ import com.honger1234.springbootprojectseed.util.ResultGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
+import sun.rmi.runtime.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +40,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/contact")
 @Api(tags = "联系人模块")
+@Slf4j
 public class ContactController {
 
     @Autowired
     private IContactService contactService;
+
+    @Value("${aliyun.oss.file.endpoint}")
+    private String endpoint;
+
+    @Value("${aliyun.oss.file.keyid}")
+    private String accessKeyId;
+
+    @Value("${aliyun.oss.file.keysecret}")
+    private String accessKeySecret;
+
+    @Value("${aliyun.oss.file.bucketname}")
+    private String bucketName;
 
     /**
      * 获取用户的所有联系人
@@ -89,7 +109,21 @@ public class ContactController {
         }
         contact.setUserId(user.getId().toString());
         // 创建OSSClient实例。
-//        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        String fileName="headPortrait/"+mFile.getOriginalFilename();
+        try {
+            // 上传文件。
+            ossClient.putObject(bucketName,fileName,mFile.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResultGenerator.genFailResult("添加失败，头像上传失败");
+        }finally {
+            // 关闭OSSClient。
+            ossClient.shutdown();
+        }
+        String imageUrl="http://"+bucketName+"."+endpoint+"/"+fileName;
+        contact.setImage(imageUrl);
         boolean save = contactService.save(contact);
         if (save){
             return ResultGenerator.genSuccessResult(contact);

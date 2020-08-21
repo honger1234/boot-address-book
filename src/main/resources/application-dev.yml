@@ -32,7 +32,7 @@ logging:
 aliyun:
   oss:
     file:
-      endpoint: http://oss-cn-beijing.aliyuncs.com
+      endpoint: oss-cn-beijing.aliyuncs.com
       keyid: LTAI4GL8wAhnHKYz8fYwwA9w
       keysecret: ZPfILF4P5QKfBhOW9K3H2DFZSbd09i
       bucketname: address-book1

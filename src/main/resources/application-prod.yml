@@ -27,3 +27,12 @@ mybatis-plus:
 logging:
   level:
     com.honger1234.springbootprojectseed.dao: debug
+
+#阿里云OSS配置
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      keyid: LTAI4GL8wAhnHKYz8fYwwA9w
+      keysecret: ZPfILF4P5QKfBhOW9K3H2DFZSbd09i
+      bucketname: address-book1
