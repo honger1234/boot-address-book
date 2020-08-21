@@ -35,6 +35,9 @@ public class Contact implements Serializable {
       @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty(value = "用户ID")
+    private String userId;
+
     @ApiModelProperty(value = "姓名")
     private String name;
 

@@ -18,7 +18,7 @@ public class JWTUtil {
 
     private static String SECRET="WgtqaT1HNTZPZNMDJu3k" ;
 
-    private static long EXPIRE=15;//失效时间,60分钟
+    private static long EXPIRE=60*24;//失效时间,一天
 
     /**
      * 生成token

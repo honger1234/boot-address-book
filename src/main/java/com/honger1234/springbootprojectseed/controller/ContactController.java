@@ -8,13 +8,16 @@ import com.honger1234.springbootprojectseed.entity.Contact;
 import com.honger1234.springbootprojectseed.entity.Result;
 import com.honger1234.springbootprojectseed.entity.SysUser;
 import com.honger1234.springbootprojectseed.service.IContactService;
+import com.honger1234.springbootprojectseed.util.ChinesePinyinUtil;
 import com.honger1234.springbootprojectseed.util.ResultGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +77,19 @@ public class ContactController {
      */
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加联系人")
-    public Result addContact(@RequestBody Contact contact){
+    public Result addContact(Contact contact, @ApiParam(value = "头像") @RequestParam(value = "mFile",required = false) MultipartFile mFile,@CurrentUser SysUser user){
+//        Contact contact = new Contact();
+        //获取姓名首字符串
+        String initial = ChinesePinyinUtil.getPinYinHeadChar(String.valueOf(contact.getName().charAt(0))).toUpperCase();
+        //判断字符串是字母还是数字
+        if (Character.isAlphabetic(initial.codePointAt(0))){
+            contact.setInitial(initial);
+        }else{
+            contact.setInitial("#");
+        }
+        contact.setUserId(user.getId().toString());
+        // 创建OSSClient实例。
+//        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         boolean save = contactService.save(contact);
         if (save){
             return ResultGenerator.genSuccessResult(contact);
