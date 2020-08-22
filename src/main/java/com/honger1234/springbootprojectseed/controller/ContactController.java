@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
@@ -174,8 +175,9 @@ public class ContactController {
             }
             imageUrl="http://"+bucketName+"."+endpoint+"/"+fileName;
         }
-
-        contact.setImage(imageUrl);
+        if (!StringUtils.isEmpty(imageUrl)){
+            contact.setImage(imageUrl);
+        }
         boolean b = contactService.updateById(contact);
         if (b){
             return ResultGenerator.genSuccessResult(contact);
