@@ -40,6 +40,7 @@
         left join tb_contact t3 on t2.id=t3.user_id
         <where>
             t3.user_id=#{id}
+            and t3.deleted=0
         </where>
         order by t3.initial
     </select>

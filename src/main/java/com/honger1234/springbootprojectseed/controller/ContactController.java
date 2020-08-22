@@ -108,21 +108,25 @@ public class ContactController {
             contact.setInitial("#");
         }
         contact.setUserId(user.getId().toString());
-        // 创建OSSClient实例。
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        String fileName="headPortrait/"+mFile.getOriginalFilename();
-        try {
-            // 上传文件。
-            ossClient.putObject(bucketName,fileName,mFile.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-            return ResultGenerator.genFailResult("添加失败，头像上传失败");
-        }finally {
-            // 关闭OSSClient。
-            ossClient.shutdown();
+        String imageUrl="";
+        if(mFile!=null){
+            // 创建OSSClient实例。
+            OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+            String fileName=user.getId()+"/headPortrait/"+mFile.getOriginalFilename();
+            try {
+                // 上传文件。
+                ossClient.putObject(bucketName,fileName,mFile.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+                return ResultGenerator.genFailResult("添加失败，头像上传失败");
+            }finally {
+                // 关闭OSSClient。
+                ossClient.shutdown();
+            }
+            imageUrl="http://"+bucketName+"."+endpoint+"/"+fileName;
         }
-        String imageUrl="http://"+bucketName+"."+endpoint+"/"+fileName;
+
         contact.setImage(imageUrl);
         boolean save = contactService.save(contact);
         if (save){
@@ -151,7 +155,27 @@ public class ContactController {
      */
     @PostMapping(value = "/update")
     @ApiOperation(value = "修改联系人")
-    public Result updateContact(@RequestBody Contact contact){
+    public Result updateContact(Contact contact,@ApiParam(value = "头像")@RequestParam(value = "mFile",required = false) MultipartFile mFile){
+        String imageUrl="";
+        if(mFile!=null){
+            // 创建OSSClient实例。
+            OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+            String fileName=contact.getId()+"/headPortrait/"+mFile.getOriginalFilename();
+            try {
+                // 上传文件。
+                ossClient.putObject(bucketName,fileName,mFile.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+                return ResultGenerator.genFailResult("添加失败，头像上传失败");
+            }finally {
+                // 关闭OSSClient。
+                ossClient.shutdown();
+            }
+            imageUrl="http://"+bucketName+"."+endpoint+"/"+fileName;
+        }
+
+        contact.setImage(imageUrl);
         boolean b = contactService.updateById(contact);
         if (b){
             return ResultGenerator.genSuccessResult(contact);
