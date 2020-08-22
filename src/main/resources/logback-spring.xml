@@ -2,7 +2,7 @@
 <configuration debug="false">
     <!--设置存储路径变量-->
 <!--    <property name="log.path" value="log"/>-->
-    <property name="log.path" value="/data/springboot/log"/>
+    <property name="log.path" value="/project/boot-address-book"/>
 
     <!--控制台输出appender-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
